@@ -1,4 +1,4 @@
-import React, { useState,useReducer } from "react";
+import React, { useState,useReducer,Component } from "react";
 import "./../styles/App.css";
 
 
@@ -137,13 +137,117 @@ const states = [{
 	}]
 }];
 
+class Dropdown extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			state:states[0],
+			city:states[0].city,
+			landmark:states[0].city[0].landmarks,
+			stateName:states[0].name,
+			stateDes:states[0].description,
+			cityName:states[0].city[0].name,
+			cityDes:states[0].city[0].description,
+			landmarkName:states[0].city[0].landmarks[0].name,
+			landmarkDes:states[0].city[0].landmarks[0].description
+		};
+		this.selectState = this.selectState.bind(this);
+		this.selectCity = this.selectCity.bind(this);
+		this.selectLandmark = this.selectLandmark.bind(this);
+	}
+
+	selectState(e){
+		const selectedState = states[parseInt(e.target.value)];
+		this.setState({city:selectedState.city,stateName:selectedState.name,stateDes:selectedState.description});
+	}
+
+	selectCity(e){
+		const selectedCity = this.state.city[parseInt(e.target.value)];
+		this.setState({landmark:selectedCity.landmarks,cityName:selectedCity.name,cityDes:selectedCity.description});
+		
+		
+	}
+
+	selectLandmark(e){
+		const selectedLandmark = this.state.landmark[parseInt(e.target.value)];
+		this.setState({landmarkName:selectedLandmark.name,landmarkDes:selectedLandmark.description});
+		
+	}
+
+	render(){
+		return (
+<div className="container-dropdown">
+			<div className="container-dropdown-select">
+				<div className="select-box">
+				<span>State: </span>
+				<select id="state" onChange={this.selectState}>
+					{states.map((stateItem,index)=>(
+						<option key={index} value={index}>{stateItem.name}</option>
+					))}
+				</select>
+				</div>
+				<div className="select-box">
+				<span>City: </span>
+				
+				<select id="city" onChange={this.selectCity}>
+					{this.state.city.map((cityItem,index)=>(
+						<option key={index} value={index}>{cityItem.name}</option>
+					))}
+				</select>
+				</div>
+				<div className="select-box">
+				<span>Town: </span>
+				<select id="landmark" onChange={this.selectLandmark}>
+					{this.state.landmark.map((landmarkItem,index)=>(
+						<option key={index}value={index} >{landmarkItem.name}</option>
+					))}
+				</select>
+				</div>
+				
+				
+			</div>
+			<div className="container-dropdown-display">
+				<div className="box">
+				<div id="state-title">
+							<b>{this.state.stateName}</b>
+						</div>
+						<div id="state-description">
+							{this.state.stateDes}
+						</div>
+				</div>
+				<div className="box">
+				<div id="city-title">
+						<b>{this.state.cityName}</b>
+						</div>
+						<div id="city-description">
+						{this.state.cityDes}
+						</div>
+				</div>
+				<div className="box">
+				<div id="landmark-title">
+						<b>{this.state.landmarkName}</b>
+						</div>
+						<div id="landmark-description">
+						{this.state.landmarkDes}
+						</div>
+
+				</div>
+						
+						
+						
+			</div>
+		</div>
+		);
+		
+	}
+}
 
 function App() 
 {
 	// Do not alter/remove main div
 	return (
 	<div id="main">
-		
+		<Dropdown/>
 	</div>
 	);
 }
