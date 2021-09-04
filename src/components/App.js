@@ -158,12 +158,27 @@ class Dropdown extends Component{
 
 	selectState(e){
 		const selectedState = states[parseInt(e.target.value)];
-		this.setState({city:selectedState.city,stateName:selectedState.name,stateDes:selectedState.description});
+		this.setState({
+			city:selectedState.city,
+			landmark:selectedState.city[0].landmarks,
+			stateName:selectedState.name,
+			stateDes:selectedState.description,
+			cityName:selectedState.city[0].name,
+			cityDes:selectedState.city[0].description,
+			landmarkName:selectedState.city[0].landmarks[0].name,
+			landmarkDes:selectedState.city[0].landmarks[0].description
+		});
 	}
 
 	selectCity(e){
 		const selectedCity = this.state.city[parseInt(e.target.value)];
-		this.setState({landmark:selectedCity.landmarks,cityName:selectedCity.name,cityDes:selectedCity.description});
+		this.setState({
+			landmark:selectedCity.landmarks,
+			cityName:selectedCity.name,
+			cityDes:selectedCity.description,
+			landmarkName:selectedCity.landmarks[0].name,
+			landmarkDes:selectedCity.landmarks[0].description
+		});
 		
 		
 	}
